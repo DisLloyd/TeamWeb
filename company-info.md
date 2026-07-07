@@ -1,4 +1,4 @@
-# ST Tech - Company Information
+# SYSTEM BUILDERS - Company Information
 
 > **Important:** To update information on the website, edit the `company-data.json` file.  
 > This file is for documentation purposes only.
@@ -117,7 +117,7 @@ Online stores built with secure payment processing and inventory management.
 - 100% client satisfaction rate
 - All projects delivered on time and within budget
 
-## Why Choose ST Tech?
+## Why Choose SYSTEM BUILDERS?
 
 ✅ **Fresh Perspective** - New team with innovative ideas
 ✅ **Competitive Pricing** - Quality work at affordable rates
@@ -139,22 +139,22 @@ Sunday: Closed
 
 ## Social Media
 
-- **Instagram:** [@sttech.official](#)
-- **Facebook:** [ST Tech](#)
-- **LinkedIn:** [ST Tech](#)
-- **GitHub:** [github.com/sttech](#)
+- **Instagram:** [@systembuilders.official](#)
+- **Facebook:** [SYSTEM BUILDERS](#)
+- **LinkedIn:** [SYSTEM BUILDERS](#)
+- **GitHub:** [github.com/systembuilders](#)
 
 ---
 
 ## Client Testimonials
 
-> "ST Tech is a young team with fresh ideas. They delivered our website on time and were very responsive to feedback. Looking forward to working with them again!"  
+> "SYSTEM BUILDERS is a young team with fresh ideas. They delivered our website on time and were very responsive to feedback. Looking forward to working with them again!"  
 > — *Local Business Owner*
 
-> "Great communication and attention to detail. ST Tech took time to understand our needs and delivered exactly what we wanted. Highly recommend for small businesses!"  
+> "Great communication and attention to detail. SYSTEM BUILDERS took time to understand our needs and delivered exactly what we wanted. Highly recommend for small businesses!"  
 > — *Startup Founder*
 
-> "Affordable, professional, and eager to help. ST Tech gave us a modern website that perfectly represents our brand. Their enthusiasm is contagious!"  
+> "Affordable, professional, and eager to help. SYSTEM BUILDERS gave us a modern website that perfectly represents our brand. Their enthusiasm is contagious!"  
 > — *Freelance Consultant*
 
 ---

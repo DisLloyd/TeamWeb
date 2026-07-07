@@ -477,3 +477,76 @@ window.addEventListener('scroll', () => {
     }
   });
 });
+
+
+// ===== 3D TILT CARD EFFECT WITH MOUSE TRACKING =====
+/* 
+ * 🎯 Mouse Tracking - Cards follow your mouse movement
+ * 🔄 3D Rotation - Tilts up to 12° in X and Y axis
+ * ✨ Orchid Glare - Radial gradient follows mouse with orchid color
+ * 📏 Perspective - 1000px depth for realistic 3D
+ * 🔍 Slight Zoom - Scales to 1.02 on hover
+ * 🌊 Smooth Transition - Cubic bezier easing (0.3s)
+ * 
+ * Works on:
+ * - Service cards only
+ */
+function initTiltCards() {
+  // Only apply to service cards
+  const cards = document.querySelectorAll('.service-card');
+  
+  cards.forEach(card => {
+    // Create glare overlay
+    const glare = document.createElement('div');
+    glare.className = 'tilt-glare';
+    card.appendChild(glare);
+    
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      
+      // Calculate percentages
+      const px = x / rect.width;
+      const py = y / rect.height;
+      
+      // Calculate rotation (max 12 degrees)
+      const rotateY = (px - 0.5) * 24; // -12 to +12
+      const rotateX = (0.5 - py) * 24; // -12 to +12
+      
+      // Apply 3D transform
+      card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+      
+      // Update glare position
+      glare.style.background = `radial-gradient(circle at ${px * 100}% ${py * 100}%, rgba(218, 112, 214, 0.3), transparent 50%)`;
+      glare.style.opacity = '1';
+    });
+    
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+      glare.style.opacity = '0';
+    });
+  });
+}
+
+// ===== TECH STACK INFINITE SCROLLER =====
+function initTechScroller() {
+  const track = document.querySelector('.tech-scroller-track');
+  if (!track) return;
+  
+  const firstSet = track.querySelector('.tech-scroller-set');
+  if (!firstSet) return;
+  
+  // Clone the first set multiple times to ensure seamless loop
+  const clones = 3; // Create 3 additional copies
+  for (let i = 0; i < clones; i++) {
+    const clone = firstSet.cloneNode(true);
+    track.appendChild(clone);
+  }
+}
+
+// Initialize on load
+document.addEventListener('DOMContentLoaded', () => {
+  initTiltCards();
+  initTechScroller();
+});
