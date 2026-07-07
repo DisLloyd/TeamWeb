@@ -1,6 +1,6 @@
-# ST Tech Website
+# SYSTEM BUILDERS Website
 
-Welcome to the ST Tech website repository!
+Welcome to the SYSTEM BUILDERS website repository!
 
 ## 🚀 Quick Start
 
@@ -19,7 +19,7 @@ To run this website locally:
 #### 1. Company Information
 ```json
 "company": {
-  "name": "ST Tech",
+  "name": "SYSTEM BUILDERS",
   "tagline": "Innovative IT Solutions",
   "founded": 2025,
   "description": "Your company description here",
