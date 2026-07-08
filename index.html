@@ -383,63 +383,12 @@
         <p class="max-w-2xl mx-auto text-dark-400 text-lg">We stay at the forefront of technology to deliver the best solutions for our clients.</p>
       </div>
 
-      <!-- Tech Logos -->
-      <div class="tech-scroller-mask relative overflow-hidden py-8">
-        <div class="tech-scroller-track flex gap-8">
-          <div class="tech-scroller-set flex gap-8 items-center">
-            <div class="tech-logo-item flex flex-col items-center gap-3 px-6">
-              <div class="text-5xl">⚛️</div>
-              <span class="text-sm font-medium text-primary-300">React</span>
-            </div>
-            <div class="tech-logo-item flex flex-col items-center gap-3 px-6">
-              <div class="text-5xl">▲</div>
-              <span class="text-sm font-medium text-primary-300">Next.js</span>
-            </div>
-            <div class="tech-logo-item flex flex-col items-center gap-3 px-6">
-              <div class="text-5xl">🟢</div>
-              <span class="text-sm font-medium text-primary-300">Node.js</span>
-            </div>
-            <div class="tech-logo-item flex flex-col items-center gap-3 px-6">
-              <div class="text-5xl">🐍</div>
-              <span class="text-sm font-medium text-primary-300">Python</span>
-            </div>
-            <div class="tech-logo-item flex flex-col items-center gap-3 px-6">
-              <div class="text-5xl">☁️</div>
-              <span class="text-sm font-medium text-primary-300">AWS</span>
-            </div>
-            <div class="tech-logo-item flex flex-col items-center gap-3 px-6">
-              <div class="text-5xl">🔷</div>
-              <span class="text-sm font-medium text-primary-300">TypeScript</span>
-            </div>
-            <div class="tech-logo-item flex flex-col items-center gap-3 px-6">
-              <div class="text-5xl">🌊</div>
-              <span class="text-sm font-medium text-primary-300">Tailwind</span>
-            </div>
-            <div class="tech-logo-item flex flex-col items-center gap-3 px-6">
-              <div class="text-5xl">🗄️</div>
-              <span class="text-sm font-medium text-primary-300">PostgreSQL</span>
-            </div>
-            <div class="tech-logo-item flex flex-col items-center gap-3 px-6">
-              <div class="text-5xl">🐳</div>
-              <span class="text-sm font-medium text-primary-300">Docker</span>
-            </div>
-            <div class="tech-logo-item flex flex-col items-center gap-3 px-6">
-              <div class="text-5xl">☸️</div>
-              <span class="text-sm font-medium text-primary-300">Kubernetes</span>
-            </div>
-            <div class="tech-logo-item flex flex-col items-center gap-3 px-6">
-              <div class="text-5xl">🔥</div>
-              <span class="text-sm font-medium text-primary-300">Firebase</span>
-            </div>
-            <div class="tech-logo-item flex flex-col items-center gap-3 px-6">
-              <div class="text-5xl">⚡</div>
-              <span class="text-sm font-medium text-primary-300">Vite</span>
-            </div>
-          </div>
-        </div>
-        <!-- Fade Edges -->
-        <div class="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-dark-950 to-transparent pointer-events-none z-10"></div>
-        <div class="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-dark-950 to-transparent pointer-events-none z-10"></div>
+      <!-- Tech Stack 3D Display -->
+      <div class="relative w-full" style="height: 600px;">
+        <div id="tech-sphere-v2" class="tech-dome-container"></div>
+        
+        <!-- Faded edges overlay -->
+        <div class="absolute inset-0 pointer-events-none tech-dome-fade"></div>
       </div>
     </div>
   </section>
@@ -840,6 +789,6 @@
     <i data-lucide="arrow-up" class="w-5 h-5"></i>
   </button>
 
-  <script src="script.js"></script>
+  <script src="script.js?v=13"></script>
 </body>
 </html>
