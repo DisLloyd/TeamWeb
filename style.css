@@ -204,6 +204,7 @@ body {
   background: linear-gradient(135deg, transparent, rgba(99, 102, 241, 0.1), transparent);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   mask-composite: exclude;
   opacity: 0;
   transition: opacity 0.5s ease;
@@ -501,20 +502,6 @@ textarea::selection {
     height: 60px;
   }
 }
-    height: 90px;
-    margin-left: -45px;
-    margin-top: -45px;
-  }
-  
-  .tech-icon {
-    font-size: 2.5rem;
-  }
-  
-  .tech-name {
-    font-size: 0.7rem;
-  }
-}
-
 
 /* ===== GLASSMORPHISM & GLOWING EFFECTS ===== */
 
