@@ -1314,3 +1314,272 @@ document.addEventListener('DOMContentLoaded', () => {
   initTechDome();
   initTechStackScaleAnimation();
 });
+
+// ===== GOOGLE-STYLE REVIEWS SYSTEM =====
+(function () {
+  const GOOGLE_CLIENT_ID = 'YOUR_GOOGLE_CLIENT_ID_HERE';
+  const STORAGE_KEY = 'sb_google_reviews';
+  const LIKES_STORAGE_KEY = 'sb_review_likes';
+
+  const seedReviews = [
+    {
+      id: 'seed1',
+      name: 'David Mitchell',
+      picture: 'http://static.photos/people/200x200/10',
+      rating: 5,
+      text: "SYSTEM BUILDERS is a young team with fresh ideas. They delivered our website on time and were very responsive to feedback.",
+      date: '2026-03-14',
+      likes: 4
+    },
+    {
+      id: 'seed2',
+      name: 'Lisa Rodriguez',
+      picture: 'http://static.photos/people/200x200/20',
+      rating: 5,
+      text: "Great communication and attention to detail. Highly recommend for small businesses!",
+      date: '2026-02-02',
+      likes: 2
+    },
+    {
+      id: 'seed3',
+      name: 'James Park',
+      picture: 'http://static.photos/people/200x200/30',
+      rating: 5,
+      text: "Affordable, professional, and eager to help. Their enthusiasm is contagious!",
+      date: '2026-01-19',
+      likes: 6
+    }
+  ];
+
+  let currentUser = null;
+  let selectedRating = 5;
+
+  function getReviews() {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (!stored) return [...seedReviews];
+    try {
+      return JSON.parse(stored);
+    } catch {
+      return [...seedReviews];
+    }
+  }
+
+  function saveReviews(reviews) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(reviews));
+    // ---- BACKEND HOOK ----
+    // To make reviews visible to ALL visitors (not just this browser),
+    // replace this function to POST to Firebase/Supabase/your API instead.
+  }
+
+  function getLikedReviewIds() {
+    const stored = localStorage.getItem(LIKES_STORAGE_KEY);
+    if (!stored) return [];
+    try {
+      return JSON.parse(stored);
+    } catch {
+      return [];
+    }
+  }
+
+  function saveLikedReviewIds(ids) {
+    localStorage.setItem(LIKES_STORAGE_KEY, JSON.stringify(ids));
+  }
+
+  function getUserLikeKey(user) {
+    return user?.email ? `review-like:${user.email}` : null;
+  }
+
+  function starsHTML(rating, size = 'review-stars') {
+    let html = `<div class="${size}">`;
+    for (let i = 1; i <= 5; i++) {
+      html += `<i data-lucide="star" class="star-icon ${i <= rating ? 'filled' : ''}"></i>`;
+    }
+    html += `</div>`;
+    return html;
+  }
+
+  function timeAgo(dateStr) {
+    const diff = Date.now() - new Date(dateStr).getTime();
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    if (days <= 0) return 'Today';
+    if (days === 1) return '1 day ago';
+    if (days < 30) return `${days} days ago`;
+    const months = Math.floor(days / 30);
+    if (months < 12) return `${months} month${months > 1 ? 's' : ''} ago`;
+    const years = Math.floor(months / 12);
+    return `${years} year${years > 1 ? 's' : ''} ago`;
+  }
+
+  function renderReviews() {
+    const reviews = getReviews();
+    const grid = document.getElementById('reviews-grid');
+    if (!grid) return;
+
+    grid.innerHTML = reviews
+      .slice()
+      .sort((a, b) => new Date(b.date) - new Date(a.date))
+      .map((r) => `
+        <div class="review-card">
+          <div class="review-card-header">
+            <img class="review-avatar" src="${r.picture}" alt="${r.name}" />
+            <div>
+              <div class="review-name-row">
+                <span class="font-semibold text-white">${r.name}</span>
+              </div>
+              <span class="review-verified-badge">
+                <i data-lucide="badge-check" style="width:12px;height:12px;"></i> Verified Google Account
+              </span>
+            </div>
+          </div>
+          ${starsHTML(r.rating)}
+          <p class="review-text">${r.text}</p>
+          <div class="review-footer">
+            <span class="review-date">${timeAgo(r.date)}</span>
+            <div class="review-actions">
+              <button class="review-action-btn" onclick="window.reportReview('${r.id}')">
+                <i data-lucide="flag"></i> Report
+              </button>
+            </div>
+          </div>
+        </div>
+      `)
+      .join('');
+
+    // Average rating
+    const avg = reviews.length ? reviews.reduce((s, r) => s + r.rating, 0) / reviews.length : 5;
+    document.getElementById('review-average').textContent = avg.toFixed(1);
+    document.getElementById('review-average-stars').innerHTML = `<div class="flex gap-0.5">${starsHTML(Math.round(avg), '').replace('<div class="">', '').replace('</div>','')}</div>`;
+    document.getElementById('review-count').textContent = `${reviews.length} review${reviews.length !== 1 ? 's' : ''}`;
+
+    if (window.lucide) lucide.createIcons();
+  }
+
+  window.likeReview = function (id) {
+    if (!currentUser) {
+      showToast('Please sign in with Google to like a review.');
+      return;
+    }
+
+    const reviews = getReviews();
+    const review = reviews.find((r) => r.id === id);
+    if (!review) return;
+
+    const likeKey = getUserLikeKey(currentUser);
+    const likedReviewIds = getLikedReviewIds();
+    const userLikedIds = likedReviewIds.filter((item) => item.startsWith(`${likeKey}:`));
+    const alreadyLiked = userLikedIds.includes(`${likeKey}:${id}`);
+
+    if (alreadyLiked) {
+      showToast('You have already liked this review with this Google account.');
+      return;
+    }
+
+    review.likes = (review.likes || 0) + 1;
+    saveReviews(reviews);
+    saveLikedReviewIds([...likedReviewIds, `${likeKey}:${id}`]);
+    renderReviews();
+  };
+
+  window.reportReview = function (id) {
+    if (confirm('Report this review as inappropriate?')) {
+      showToast('Review reported. Our team will look into it.');
+    }
+  };
+
+  function renderStarInput() {
+    const container = document.getElementById('review-star-input');
+    if (!container) return;
+    container.innerHTML = '';
+    for (let i = 1; i <= 5; i++) {
+      const star = document.createElement('i');
+      star.setAttribute('data-lucide', 'star');
+      star.className = `star-icon ${i <= selectedRating ? 'filled' : ''}`;
+      star.addEventListener('click', () => {
+        selectedRating = i;
+        renderStarInput();
+      });
+      container.appendChild(star);
+    }
+    if (window.lucide) lucide.createIcons();
+  }
+
+  function decodeJwt(token) {
+    const base64 = token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/');
+    return JSON.parse(decodeURIComponent(escape(atob(base64))));
+  }
+
+  function handleGoogleSignIn(response) {
+    const payload = decodeJwt(response.credential);
+    currentUser = {
+      name: payload.name,
+      picture: payload.picture,
+      email: payload.email
+    };
+
+    document.getElementById('review-signed-out').classList.add('hidden');
+    document.getElementById('review-signed-in').classList.remove('hidden');
+    document.getElementById('review-user-avatar').src = currentUser.picture;
+    document.getElementById('review-user-name').textContent = currentUser.name;
+
+    selectedRating = 5;
+    renderStarInput();
+  }
+
+  function initGoogleSignIn() {
+    if (!window.google || !google.accounts) {
+      // Retry shortly if the GSI script hasn't loaded yet
+      setTimeout(initGoogleSignIn, 300);
+      return;
+    }
+    google.accounts.id.initialize({
+      client_id: GOOGLE_CLIENT_ID,
+      callback: handleGoogleSignIn
+    });
+    google.accounts.id.renderButton(
+      document.getElementById('google-signin-button'),
+      { theme: 'filled_black', size: 'large', shape: 'pill', text: 'signin_with' }
+    );
+  }
+
+  function initReviewSystem() {
+    renderReviews();
+    initGoogleSignIn();
+
+    document.getElementById('review-signout-btn')?.addEventListener('click', () => {
+      currentUser = null;
+      document.getElementById('review-signed-in').classList.add('hidden');
+      document.getElementById('review-signed-out').classList.remove('hidden');
+      if (window.google?.accounts) google.accounts.id.disableAutoSelect();
+    });
+
+    document.getElementById('review-submit-btn')?.addEventListener('click', () => {
+      const textEl = document.getElementById('review-text-input');
+      const text = textEl.value.trim();
+      if (!currentUser) return;
+      if (!text) {
+        showToast('Please write a review before posting.');
+        return;
+      }
+
+      const reviews = getReviews();
+      reviews.push({
+        id: 'r_' + Date.now(),
+        name: currentUser.name,
+        picture: currentUser.picture,
+        rating: selectedRating,
+        text,
+        date: new Date().toISOString(),
+        likes: 0
+      });
+      saveReviews(reviews);
+      renderReviews();
+
+      textEl.value = '';
+      selectedRating = 5;
+      renderStarInput();
+      showToast('✨ Your review has been posted!');
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', initReviewSystem);
+})();

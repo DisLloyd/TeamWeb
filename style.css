@@ -671,3 +671,141 @@ a.group:active {
   z-index: 2;
   transform: translateZ(20px);
 }
+/* ===== Google-Style Reviews ===== */
+#google-signin-button > div {
+  margin: 0 auto;
+}
+
+.review-card {
+  position: relative;
+  padding: 2rem;
+  background: rgba(10, 10, 10, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1rem;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.review-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(218, 112, 214, 0.25);
+}
+
+.review-card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.review-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  flex-shrink: 0;
+}
+
+.review-name-row {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.review-verified-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.7rem;
+  color: #DA70D6;
+  background: rgba(218, 112, 214, 0.1);
+  border: 1px solid rgba(218, 112, 214, 0.25);
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  margin-top: 0.25rem;
+  width: fit-content;
+}
+
+.review-stars {
+  display: flex;
+  gap: 2px;
+  margin-bottom: 0.75rem;
+}
+
+.review-stars .star-icon,
+#review-star-input .star-icon,
+#review-average-stars .star-icon {
+  width: 16px;
+  height: 16px;
+  color: #4b5563;
+}
+
+.review-stars .star-icon.filled,
+#review-star-input .star-icon.filled,
+#review-average-stars .star-icon.filled {
+  color: #facc15;
+  fill: #facc15;
+}
+
+#review-star-input .star-icon {
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+#review-star-input .star-icon:hover {
+  transform: scale(1.15);
+}
+
+.review-text {
+  color: #cbd5e1;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin-bottom: 1.25rem;
+}
+
+.review-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding-top: 0.9rem;
+}
+
+.review-date {
+  font-size: 0.75rem;
+  color: #64748b;
+}
+
+.review-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.review-action-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.75rem;
+  color: #94a3b8;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.review-action-btn:hover {
+  color: #DA70D6;
+}
+
+.review-action-btn.liked {
+  color: #DA70D6;
+}
+
+.review-action-btn i,
+.review-action-btn svg {
+  width: 14px;
+  height: 14px;
+}
